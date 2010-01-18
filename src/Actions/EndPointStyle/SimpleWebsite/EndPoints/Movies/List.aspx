@@ -20,9 +20,11 @@
 
     <h2>These are my favorite movies</h2>
 
-    <input name="newMovieTitle" id="newMovieTitle" />
-    <input type="button" value="Add" id="addMovieButton" />
-
+    <div>
+        <input name="newMovieTitle" id="newMovieTitle" />
+        <input type="button" value="Add" id="addMovieButton" />
+    </div>
+    <div>Drag the movies to show order of preference</div>
     <ul id="movieList"></ul>
 
 </body>
@@ -37,11 +39,10 @@
         var movieList = $("#movieList");
 
         var addMovieToList = function(movie){
-            var listItem = $("<li>").text(movie.Title);
+            var listItem = $("<li>").text(movie.Title).attr("id", movie.Id);
             listItem.append( $("<a>").text("x")
                 .attr("href", "#")
-                .addClass("removeLink")
-                .data("movieId", movie.Id) );
+                .addClass("removeLink"));
             movieList.append( listItem );
         };
         
@@ -66,7 +67,6 @@
         
         $(".removeLink").live("click", function(){
             var link = $(this);
-            var movieId = link.data("movieId");
             
             var onSuccess = function(data){
                 if (data.Success !== true){
@@ -75,6 +75,7 @@
                 }
                 
                 var listItem = link.parent("li");
+                var movieId = listItem.attr("id");
                 listItem.remove();
             }
             
@@ -82,6 +83,16 @@
         });
         
         $("#addMovieButton").click(saveNewMovie);
+        
+        var saveMovieOrderPreference = function(){
+            var orderPreference = $(this).sortable("toArray") + "";
+            console.log( orderPreference ); 
+            $.post(document.location, {SortOrder: orderPreference});
+        };
+        
+        movieList.sortable({
+            update: saveMovieOrderPreference
+        });
     });
 
 

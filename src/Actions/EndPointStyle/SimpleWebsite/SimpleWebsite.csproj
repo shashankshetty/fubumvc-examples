@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="Core\IRepository.cs" />
     <Compile Include="Core\ModelExtensions.cs" />
+    <Compile Include="Core\UserMoviePreference.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -21,6 +21,8 @@ namespace SimpleWebsite
                 .IncludeTypes(t => t.Namespace.StartsWith(typeof(EndPointUrlPolicy).Namespace) && t.Name.EndsWith("Endpoint"))
                 .IncludeMethods(action => httpVerbs.Contains(action.Method.Name));
 
+            httpVerbs.Each(verb => Routes.ConstrainToHttpMethod(action => action.Method.Name.Equals(verb, StringComparison.InvariantCultureIgnoreCase), verb));
+
             Routes.UrlPolicy<EndPointUrlPolicy>();
 
             JsonOutputIf.CallMatches(action => action.Returns<AjaxResponse>());

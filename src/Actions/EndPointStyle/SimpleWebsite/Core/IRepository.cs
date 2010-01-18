@@ -26,7 +26,7 @@ namespace SimpleWebsite.Core
         public void Save(object item)
         {
             var entity = item as IEntity;
-            if (entity != null)
+            if (entity != null && entity.Id == 0)
             {
                 entity.Id = Interlocked.Increment(ref _nextId);
             }
