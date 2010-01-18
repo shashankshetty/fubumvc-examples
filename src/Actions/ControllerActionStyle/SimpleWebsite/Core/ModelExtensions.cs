@@ -1,4 +1,4 @@
-using FubuMVC.Core.Util;
+using HtmlTags;
 
 namespace SimpleWebsite.Core
 {
