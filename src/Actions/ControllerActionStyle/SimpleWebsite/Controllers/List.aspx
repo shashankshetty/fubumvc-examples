@@ -10,21 +10,39 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
     <style type="text/css">
-        .removeLink
-        {
-            margin-left:3px;
-        }
+body
+{
+    background-color: Red;
+    font-family:arial,helvetica,sans-serif;
+}
+
+.content
+{
+    background-color: White;
+    height: 400px;
+    width: 600px;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 0px 4px 2px 4px;
+}
+
+.removeLink
+{
+    margin-left:3px;
+}
     </style>
 </head>
 <body>
 
-    <h2>These are my favorite movies</h2>
+    <div class="content">
+        <h2>Movies I want to see</h2>
 
-    <input name="newMovieTitle" id="newMovieTitle" />
-    <input type="button" value="Add" id="addMovieButton" />
-
-    <ul id="movieList"></ul>
-
+        <div>
+            <input name="newMovieTitle" id="newMovieTitle" />
+            <input type="button" value="Add" id="addMovieButton" />
+        </div>
+        <ul id="movieList"></ul>
+    </div>
 </body>
 
 <script type="text/javascript">

@@ -12,11 +12,9 @@ namespace SimpleWebsite
 
             Applies.ToThisAssembly();
 
-            Actions
-                .IncludeTypesNamed(x => x.EndsWith("Controller"));
+            Actions.IncludeTypesNamed(x => x.EndsWith("Controller"));
 
-            Routes
-                .IgnoreControllerNamespaceEntirely();
+            Routes.IgnoreControllerNamespaceEntirely();
 
             JsonOutputIf.CallMatches(action => action.Returns<AjaxResponse>());
 

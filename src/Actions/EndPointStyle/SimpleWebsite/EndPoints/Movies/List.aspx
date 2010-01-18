@@ -10,29 +10,47 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
     <style type="text/css">
-        .removeLink
-        {
-            margin-left:3px;
-        }
+body
+{
+    background-color: Red;
+    font-family:arial,helvetica,sans-serif;
+}
+
+.content
+{
+    background-color: White;
+    height: 400px;
+    width: 600px;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 0px 4px 2px 4px;
+}
+
+.removeLink
+{
+    margin-left:3px;
+}
     </style>
 </head>
 <body>
 
-    <h2>These are my favorite movies</h2>
+    <div class="content">
+        <h2>Movies I want to see</h2>
 
-    <div>
-        <input name="newMovieTitle" id="newMovieTitle" />
-        <input type="button" value="Add" id="addMovieButton" />
+        <div>
+            <input name="newMovieTitle" id="newMovieTitle" />
+            <input type="button" value="Add" id="addMovieButton" />
+        </div>
+        <div>Drag the movies to show order of preference</div>
+        <ul id="movieList"></ul>
     </div>
-    <div>Drag the movies to show order of preference</div>
-    <ul id="movieList"></ul>
-
 </body>
 
 <script type="text/javascript">
 
     var addMovieUrl = "<%= Get<IUrlRegistry>().UrlFor(new AddMovieInput()) %>";
     var removeMovieUrl = "<%= Get<IUrlRegistry>().UrlFor(new RemoveMovieInput()) %>";
+    var updateOrderUrl = "<%= Get<IUrlRegistry>().UrlFor(new UpdateMovieListOrder()) %>";
     var movies = <%= Model.Movies.ToJson() %>;
 
     $(document).ready(function(){
@@ -67,16 +85,17 @@
         
         $(".removeLink").live("click", function(){
             var link = $(this);
+            var listItem = link.parent("li");
+            var movieId = listItem.attr("id");
             
             var onSuccess = function(data){
                 if (data.Success !== true){
                     alert("failed to remove");
-                    return;
+                    return false;
                 }
                 
-                var listItem = link.parent("li");
-                var movieId = listItem.attr("id");
                 listItem.remove();
+                return false;
             }
             
             $.post(removeMovieUrl, {Id: movieId}, onSuccess, "json");
@@ -87,7 +106,7 @@
         var saveMovieOrderPreference = function(){
             var orderPreference = $(this).sortable("toArray") + "";
             console.log( orderPreference ); 
-            $.post(document.location, {SortOrder: orderPreference});
+            $.post(updateOrderUrl, {SortOrder: orderPreference});
         };
         
         movieList.sortable({
